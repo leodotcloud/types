@@ -32,6 +32,7 @@ var (
 		Init(schemaTypes).
 		Init(stackTypes).
 		Init(userTypes).
+		Init(projectNetworkPolicyTypes).
 		Init(logTypes).
 		Init(globalTypes).
 		Init(rkeTypes)
@@ -244,6 +245,12 @@ func userTypes(schema *types.Schemas) *types.Schemas {
 				return f
 			})
 		})
+}
+
+func projectNetworkPolicyTypes(schema *types.Schemas) *types.Schemas {
+	return schema.
+		AddMapperForType(&Version, v3.ProjectNetworkPolicy{}).
+		MustImport(&Version, v3.ProjectNetworkPolicy{})
 }
 
 func logTypes(schema *types.Schemas) *types.Schemas {
