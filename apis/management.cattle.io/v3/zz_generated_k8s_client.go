@@ -39,6 +39,7 @@ type Interface interface {
 	DynamicSchemasGetter
 	AppsGetter
 	PreferencesGetter
+	ProjectNetworkPoliciesGetter
 	ClusterLoggingsGetter
 	ProjectLoggingsGetter
 	ListenConfigsGetter
@@ -75,6 +76,7 @@ type Client struct {
 	dynamicSchemaControllers              map[string]DynamicSchemaController
 	appControllers                        map[string]AppController
 	preferenceControllers                 map[string]PreferenceController
+	projectNetworkPolicyControllers       map[string]ProjectNetworkPolicyController
 	clusterLoggingControllers             map[string]ClusterLoggingController
 	projectLoggingControllers             map[string]ProjectLoggingController
 	listenConfigControllers               map[string]ListenConfigController
@@ -120,6 +122,7 @@ func NewForConfig(config rest.Config) (Interface, error) {
 		dynamicSchemaControllers:              map[string]DynamicSchemaController{},
 		appControllers:                        map[string]AppController{},
 		preferenceControllers:                 map[string]PreferenceController{},
+		projectNetworkPolicyControllers:       map[string]ProjectNetworkPolicyController{},
 		clusterLoggingControllers:             map[string]ClusterLoggingController{},
 		projectLoggingControllers:             map[string]ProjectLoggingController{},
 		listenConfigControllers:               map[string]ListenConfigController{},
@@ -458,6 +461,19 @@ type PreferencesGetter interface {
 func (c *Client) Preferences(namespace string) PreferenceInterface {
 	objectClient := clientbase.NewObjectClient(namespace, c.restClient, &PreferenceResource, PreferenceGroupVersionKind, preferenceFactory{})
 	return &preferenceClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ProjectNetworkPoliciesGetter interface {
+	ProjectNetworkPolicies(namespace string) ProjectNetworkPolicyInterface
+}
+
+func (c *Client) ProjectNetworkPolicies(namespace string) ProjectNetworkPolicyInterface {
+	objectClient := clientbase.NewObjectClient(namespace, c.restClient, &ProjectNetworkPolicyResource, ProjectNetworkPolicyGroupVersionKind, projectNetworkPolicyFactory{})
+	return &projectNetworkPolicyClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,
