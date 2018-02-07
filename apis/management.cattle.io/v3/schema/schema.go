@@ -249,8 +249,10 @@ func userTypes(schema *types.Schemas) *types.Schemas {
 
 func projectNetworkPolicyTypes(schema *types.Schemas) *types.Schemas {
 	return schema.
-		AddMapperForType(&Version, v3.ProjectNetworkPolicy{}).
-		MustImport(&Version, v3.ProjectNetworkPolicy{})
+		MustImportAndCustomize(&Version, v3.ProjectNetworkPolicy{}, func(schema *types.Schema) {
+			schema.CollectionMethods = []string{http.MethodGet, http.MethodPut, http.MethodPatch}
+			schema.ResourceMethods = []string{http.MethodGet, http.MethodPut, http.MethodPatch}
+		})
 }
 
 func logTypes(schema *types.Schemas) *types.Schemas {
