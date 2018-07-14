@@ -10,6 +10,7 @@ const (
 	ProjectNetworkPolicyFieldCreated              = "created"
 	ProjectNetworkPolicyFieldCreatorID            = "creatorId"
 	ProjectNetworkPolicyFieldDescription          = "description"
+	ProjectNetworkPolicyFieldEnabled              = "enabled"
 	ProjectNetworkPolicyFieldLabels               = "labels"
 	ProjectNetworkPolicyFieldName                 = "name"
 	ProjectNetworkPolicyFieldNamespaceId          = "namespaceId"
@@ -29,6 +30,7 @@ type ProjectNetworkPolicy struct {
 	Created              string                      `json:"created,omitempty" yaml:"created,omitempty"`
 	CreatorID            string                      `json:"creatorId,omitempty" yaml:"creatorId,omitempty"`
 	Description          string                      `json:"description,omitempty" yaml:"description,omitempty"`
+	Enabled              bool                        `json:"enabled,omitempty" yaml:"enabled,omitempty"`
 	Labels               map[string]string           `json:"labels,omitempty" yaml:"labels,omitempty"`
 	Name                 string                      `json:"name,omitempty" yaml:"name,omitempty"`
 	NamespaceId          string                      `json:"namespaceId,omitempty" yaml:"namespaceId,omitempty"`

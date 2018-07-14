@@ -446,8 +446,8 @@ func userTypes(schema *types.Schemas) *types.Schemas {
 func projectNetworkPolicyTypes(schema *types.Schemas) *types.Schemas {
 	return schema.
 		MustImportAndCustomize(&Version, v3.ProjectNetworkPolicy{}, func(schema *types.Schema) {
-			schema.CollectionMethods = []string{http.MethodGet}
-			schema.ResourceMethods = []string{http.MethodGet}
+			schema.CollectionMethods = []string{http.MethodGet, http.MethodPut}
+			schema.ResourceMethods = []string{http.MethodGet, http.MethodPut}
 		})
 }
 

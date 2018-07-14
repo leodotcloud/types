@@ -8,6 +8,7 @@ import (
 type ProjectNetworkPolicySpec struct {
 	ProjectName string `json:"projectName,omitempty" norman:"required,type=reference[project]"`
 	Description string `json:"description"`
+	Enabled     bool   `json:"enabled"`
 }
 
 type ProjectNetworkPolicyStatus struct {
