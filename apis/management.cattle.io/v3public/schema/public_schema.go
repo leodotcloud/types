@@ -65,7 +65,7 @@ func authProvidersTypes(schemas *types.Schemas) *types.Schemas {
 					Output: "token",
 				},
 			}
-			schema.CollectionMethods = []string{}
+			schema.CollectionMethods = []string{http.MethodGet}
 			schema.ResourceMethods = []string{http.MethodGet}
 		}).
 		// Azure AD provider
