@@ -21,12 +21,14 @@ type Interface interface {
 	controller.Starter
 
 	AuthProvidersGetter
+	ActiveDirectoryProvidersGetter
 }
 
 type Clients struct {
 	Interface Interface
 
-	AuthProvider AuthProviderClient
+	AuthProvider            AuthProviderClient
+	ActiveDirectoryProvider ActiveDirectoryProviderClient
 }
 
 type Client struct {
@@ -34,7 +36,8 @@ type Client struct {
 	restClient rest.Interface
 	starters   []controller.Starter
 
-	authProviderControllers map[string]AuthProviderController
+	authProviderControllers            map[string]AuthProviderController
+	activeDirectoryProviderControllers map[string]ActiveDirectoryProviderController
 }
 
 func Factory(ctx context.Context, config rest.Config) (context.Context, controller.Starter, error) {
@@ -73,6 +76,9 @@ func NewClientsFromInterface(iface Interface) *Clients {
 		AuthProvider: &authProviderClient2{
 			iface: iface.AuthProviders(""),
 		},
+		ActiveDirectoryProvider: &activeDirectoryProviderClient2{
+			iface: iface.ActiveDirectoryProviders(""),
+		},
 	}
 }
 
@@ -89,7 +95,8 @@ func NewForConfig(config rest.Config) (Interface, error) {
 	return &Client{
 		restClient: restClient,
 
-		authProviderControllers: map[string]AuthProviderController{},
+		authProviderControllers:            map[string]AuthProviderController{},
+		activeDirectoryProviderControllers: map[string]ActiveDirectoryProviderController{},
 	}, nil
 }
 
@@ -112,6 +119,19 @@ type AuthProvidersGetter interface {
 func (c *Client) AuthProviders(namespace string) AuthProviderInterface {
 	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &AuthProviderResource, AuthProviderGroupVersionKind, authProviderFactory{})
 	return &authProviderClient{
+		ns:           namespace,
+		client:       c,
+		objectClient: objectClient,
+	}
+}
+
+type ActiveDirectoryProvidersGetter interface {
+	ActiveDirectoryProviders(namespace string) ActiveDirectoryProviderInterface
+}
+
+func (c *Client) ActiveDirectoryProviders(namespace string) ActiveDirectoryProviderInterface {
+	objectClient := objectclient.NewObjectClient(namespace, c.restClient, &ActiveDirectoryProviderResource, ActiveDirectoryProviderGroupVersionKind, activeDirectoryProviderFactory{})
+	return &activeDirectoryProviderClient{
 		ns:           namespace,
 		client:       c,
 		objectClient: objectClient,
