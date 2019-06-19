@@ -32,7 +32,7 @@ type ClusterScanCondition struct {
 }
 
 type ClusterScanSpec struct {
-	Type string `json:"type"`
+	ScanType string `json:"scanType"`
 	// cluster ID
 	ClusterID string `json:"clusterId,omitempty" norman:"required,type=reference[cluster]"`
 	// manual flag
