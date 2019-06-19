@@ -17,11 +17,11 @@ const (
 	ClusterScanFieldOwnerReferences      = "ownerReferences"
 	ClusterScanFieldRemoved              = "removed"
 	ClusterScanFieldScanConfig           = "scanConfig"
+	ClusterScanFieldScanType             = "scanType"
 	ClusterScanFieldState                = "state"
 	ClusterScanFieldStatus               = "status"
 	ClusterScanFieldTransitioning        = "transitioning"
 	ClusterScanFieldTransitioningMessage = "transitioningMessage"
-	ClusterScanFieldType                 = "type"
 	ClusterScanFieldUUID                 = "uuid"
 )
 
@@ -38,11 +38,11 @@ type ClusterScan struct {
 	OwnerReferences      []OwnerReference   `json:"ownerReferences,omitempty" yaml:"ownerReferences,omitempty"`
 	Removed              string             `json:"removed,omitempty" yaml:"removed,omitempty"`
 	ScanConfig           *ClusterScanConfig `json:"scanConfig,omitempty" yaml:"scanConfig,omitempty"`
+	ScanType             string             `json:"scanType,omitempty" yaml:"scanType,omitempty"`
 	State                string             `json:"state,omitempty" yaml:"state,omitempty"`
 	Status               *ClusterScanStatus `json:"status,omitempty" yaml:"status,omitempty"`
 	Transitioning        string             `json:"transitioning,omitempty" yaml:"transitioning,omitempty"`
 	TransitioningMessage string             `json:"transitioningMessage,omitempty" yaml:"transitioningMessage,omitempty"`
-	Type                 string             `json:"type,omitempty" yaml:"type,omitempty"`
 	UUID                 string             `json:"uuid,omitempty" yaml:"uuid,omitempty"`
 }
 
